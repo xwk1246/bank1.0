@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'd:\Users\winston\Desktop\pyBank\interface.ui'
+# Form implementation generated from reading ui file 'd:\Users\winston\Desktop\pyBank\bank1.0\interface.ui'
 #
 # Created by: PyQt5 UI code generator 5.13.2
 #
