@@ -4,7 +4,7 @@ from reg import Ui_Dialog
 from interface import Ui_inter
 from PyQt5 import QtCore,QtWidgets,QtGui
 from base64 import b64encode,b64decode
-#code by XWK 2020/3/21
+#coded by XWK 2020/3/21
 
 acc = {}
 money = {}
