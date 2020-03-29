@@ -41,12 +41,10 @@ class ui(Ui_Main,QtWidgets.QMainWindow):
         regui.show() 
     
     def reset(self):
-        f = open('users.txt','w')
-        f.write('')
-        f.close()
-        f = open('money.txt','w')
-        f.write('')
-        f.close()
+        with open('users.txt','w') as f:
+            f.write('')
+        with open('money.txt','w') as f:
+            f.write('')
         self.label_2.setText('清除成功')
         
 class reg_ui(Ui_Dialog,QtWidgets.QDialog):
@@ -115,9 +113,8 @@ class add_user:
         self.p = p
 
     def add_new_user(self):
-        file = open('users.txt','a')
-        file.write(encode(self.a)+','+encode(self.p)+','+'\n')
-        file.close
+        with open('users.txt','a') as file:
+            file.write(encode(self.a)+','+encode(self.p)+','+'\n')
         money[self.a] = 0
         save_money()
         read_money()
@@ -125,29 +122,26 @@ class add_user:
 def read_users():
     global acc
     acc = {}
-    r = open('users.txt','r')
-    lines = r.readlines()
-    for line in lines:
-        list_account = line.split(',')
-        try:
-            acc[decode(list_account[0])] = decode(list_account[1])
-        except:
-            pass    
-    r.close
+    with open('users.txt','r') as r:
+        lines = r.readlines()
+        for line in lines:
+            list_account = line.split(',')
+            try:
+                acc[decode(list_account[0])] = decode(list_account[1])
+            except:
+                pass    
 
 def read_money():
     global money
-    f = open('money.txt','r')
-    try:
-        money = eval(decode(f.read()))
-    except:
-        pass
-    f.close
+    with open('money.txt','r') as f:
+        try:
+            money = eval(decode(f.read()))
+        except:
+            pass
 
 def save_money():
-    f = open('money.txt','w')
-    f.write(encode(str(money)))
-    f.close
+    with open('money.txt','w') as f:
+        f.write(encode(str(money)))
 
 def encode(target):
     enc = target.encode()
