@@ -4,6 +4,7 @@ from reg import Ui_Dialog
 from interface import Ui_inter
 from PyQt5 import QtCore,QtWidgets,QtGui
 from base64 import b64encode,b64decode
+from os import remove
 #coded by XWK 2020/3/21
 
 acc = {}
@@ -41,11 +42,12 @@ class ui(Ui_Main,QtWidgets.QMainWindow):
         regui.show() 
     
     def reset(self):
-        with open('users.txt','w') as f:
-            f.write('')
-        with open('money.txt','w') as f:
-            f.write('')
-        self.label_2.setText('清除成功')
+        try:
+            remove('money.txt')
+            remove('users.txt')          
+            self.label_2.setText('清除成功')
+        except:
+            pass
         
 class reg_ui(Ui_Dialog,QtWidgets.QDialog):
     def __init__(self):
@@ -85,7 +87,7 @@ class interface_ui(Ui_inter,QtWidgets.QDialog):
                 save_money()
                 self.label_status.setText('存款成功')
                 self.lineEdit.setText('')
-        except ValueError:
+        except :
             self.label_status.setText('請輸入一個整數')
 
 
@@ -104,7 +106,7 @@ class interface_ui(Ui_inter,QtWidgets.QDialog):
                     save_money()
                     self.label_status.setText('提款成功')
                     self.lineEdit.setText('')
-        except ValueError:
+        except :
             self.label_status.setText('請輸入一個整數')
 
 class add_user:
@@ -122,22 +124,28 @@ class add_user:
 def read_users():
     global acc
     acc = {}
-    with open('users.txt','r') as r:
-        lines = r.readlines()
-        for line in lines:
-            list_account = line.split(',')
-            try:
-                acc[decode(list_account[0])] = decode(list_account[1])
-            except:
-                pass    
+    try:
+        with open('users.txt','r') as r:
+            lines = r.readlines()
+            for line in lines:
+                list_account = line.split(',')
+                try:
+                    acc[decode(list_account[0])] = decode(list_account[1])
+                except:
+                    pass    
+    except:
+        pass
 
 def read_money():
     global money
-    with open('money.txt','r') as f:
-        try:
-            money = eval(decode(f.read()))
-        except:
-            pass
+    try:
+        with open('money.txt','r') as f:
+            try:
+                money = eval(decode(f.read()))
+            except:
+                pass
+    except:
+        pass
 
 def save_money():
     with open('money.txt','w') as f:
